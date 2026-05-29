@@ -1,0 +1,46 @@
+<section class="space-y-8">
+  <div>
+    <h1 class="text-3xl font-bold text-white md:text-4xl">Explora Pokémon</h1>
+    <p class="mt-2 text-slate-400">Busca por nombre o descubre sugerencias al azar</p>
+  </div>
+
+  <div class="flex flex-col gap-3 sm:flex-row">
+    <input
+      type="text"
+      [(ngModel)]="textoBusqueda"
+      (keyup.enter)="buscar()"
+      placeholder="Ej: pikachu, charizard..."
+      class="min-w-0 flex-1 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder:text-slate-500 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30"
+    />
+    <button
+      (click)="buscar()"
+      class="rounded-xl bg-red-500 px-6 py-3 font-semibold text-white shadow-lg shadow-red-500/30 transition hover:bg-red-400 active:scale-95"
+    >
+      Buscar
+    </button>
+  </div>
+
+  <div>
+    <h2 class="mb-4 text-xl font-semibold text-yellow-400">Aleatorios</h2>
+    @if (misPokemon.length === 0) {
+      <p class="text-center text-slate-400 italic">Cargando Pokémon...</p>
+    } @else {
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+        @for (p of misPokemon; track p.id) {
+          <a
+            [routerLink]="['/pokemon', p.id]"
+            class="group cursor-pointer rounded-2xl border border-white/10 bg-white/5 p-4 text-center backdrop-blur transition hover:-translate-y-1 hover:border-yellow-400/50 hover:bg-white/10 hover:shadow-xl hover:shadow-yellow-400/10"
+          >
+            <img
+              [src]="p.sprites.front_default"
+              [alt]="p.name"
+              class="mx-auto h-24 w-24 object-contain drop-shadow-lg transition group-hover:scale-110"
+            />
+            <span class="mt-1 block text-xs font-bold text-slate-500">#{{ p.id }}</span>
+            <p class="mt-1 capitalize font-semibold text-white">{{ p.name }}</p>
+          </a>
+        }
+      </div>
+    }
+  </div>
+</section>
